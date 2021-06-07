@@ -28,6 +28,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         makeFloor()
     }
     
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {return}
+        let location = touch.location(in: self)
+        paddle.position = CGPoint(x: location.x, y: 40)
+    }
+    
     func makeBall() {
         //
     }
@@ -43,5 +49,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     func makeFloor() {
         //
     }
+}
+
+struct Row {
+    let colour: UIColor
+    let positionY: CGFloat
 }
 
