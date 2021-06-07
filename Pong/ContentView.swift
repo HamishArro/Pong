@@ -12,6 +12,47 @@ struct ContentView: View {
                 Text("Level: 1")
                     .font(.system(size: 12, weight: .heavy, design: .rounded))
                     .foregroundColor(.white)
+                    .padding(.leading)
+                    .padding(.top, 42)
+                Text("Score: 0")
+                    .font(.system(size: 24, weight: .heavy, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding(.leading)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            if !gameScene.isGameOver {
+                VStack {
+                    Text("Game Over")
+                        .font(.system(size: 42, weight: .heavy, design: .rounded))
+                        .foregroundColor(.white)
+                        .padding(.leading)
+                    
+                    if gameScene.score == bestScore {
+                        Text("New Best Score!")
+                            .font(.system(size: 42, weight: .heavy, design: .rounded))
+                            .foregroundColor(.white)
+                            .padding(.leading)
+                        Text("\(gameScene.score)")
+                            .font(.system(size: 42, weight: .heavy, design: .rounded))
+                            .foregroundColor(.white)
+                            .padding(.leading)
+                    }
+                    
+                    Text("Play Again")
+                        .font(.system(size: 24, weight: .heavy, design: .rounded))
+                        .foregroundColor(.white)
+                        .padding(.leading)
+                        .padding()
+                        .onTapGesture {
+                            if gameScene.score > bestScore {
+                                bestScore = gameScene.score
+                            }
+                            gameScene.isGameOver.toggle()
+                            gameScene.score = 0
+                        }
+                }
             }
         }
         .ignoresSafeArea()
@@ -23,3 +64,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
