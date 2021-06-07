@@ -61,7 +61,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     }
     
     func makeBricks() {
-        //
+        let rows = [
+            Row(colour: .red, positionY: UIScreen.main.bounds.height / 1.14),
+            Row(colour: .red, positionY: UIScreen.main.bounds.height / 1.17),
+            Row(colour: .orange, positionY: UIScreen.main.bounds.height / 1.202),
+            Row(colour: .orange, positionY: UIScreen.main.bounds.height / 1.235),
+            Row(colour: .green, positionY: UIScreen.main.bounds.height / 1.272),
+            Row(colour: .green, positionY: UIScreen.main.bounds.height / 1.310),
+            Row(colour: .yellow, positionY: UIScreen.main.bounds.height / 1.350),
+            Row(colour: .yellow, positionY: UIScreen.main.bounds.height / 1.392),
+        ]
+        rows.forEach {
+            makeRows(colour: $0.colour, positionY: $0.positionY)
+        }
+    }
+    
+    func makeRows(colour: UIColor, positionY: CGFloat) {
+        let numberOfBricks = 8
+        let brickWidth: CGFloat = 50
+        let brickHeight: CGFloat = 16
+        let totalBrickWidth = brickWidth * CGFloat(numberOfBricks)
+        let xOffset = (frame.width - totalBrickWidth) / 2
+        
+        for index in 0..<numberOfBricks {
+            let brick = SKSpriteNode(color: colour, size: CGSize(width: 35, height: brickHeight))
+            brick.name = "brick"
+            brick.position = CGPoint(x: xOffset + CGFloat(CGFloat(index) + 0.5) * brickWidth, y: positionY)
+            brick.physicsBody = SKPhysicsBody(rectangleOf: brick.frame.size)
+            brick.physicsBody!.allowsRotation = false
+            brick.physicsBody!.friction = 0
+            brick.physicsBody!.isDynamic = false
+            addChild(brick)
+        }
     }
     
     func makeFloor() {
