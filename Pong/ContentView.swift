@@ -9,12 +9,12 @@ struct ContentView: View {
         ZStack {
             SpriteView(scene: gameScene)
             VStack(alignment: .leading) {
-                Text("Level: 1")
+                Text("Level: \(gameScene.level)")
                     .font(.system(size: 12, weight: .heavy, design: .rounded))
                     .foregroundColor(.white)
                     .padding(.leading)
                     .padding(.top, 42)
-                Text("Score: 0")
+                Text("Score: \(gameScene.score)")
                     .font(.system(size: 24, weight: .heavy, design: .rounded))
                     .foregroundColor(.white)
                     .padding(.leading)
@@ -22,14 +22,14 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            if !gameScene.isGameOver {
+            if gameScene.isGameOver {
                 VStack {
                     Text("Game Over")
                         .font(.system(size: 42, weight: .heavy, design: .rounded))
                         .foregroundColor(.white)
                         .padding(.leading)
                     
-                    if gameScene.score == bestScore {
+                    if gameScene.score > bestScore {
                         Text("New Best Score!")
                             .font(.system(size: 42, weight: .heavy, design: .rounded))
                             .foregroundColor(.white)
@@ -50,6 +50,8 @@ struct ContentView: View {
                                 bestScore = gameScene.score
                             }
                             gameScene.isGameOver.toggle()
+                            gameScene.makeBall()
+                            gameScene.makeBricks()
                             gameScene.score = 0
                         }
                 }

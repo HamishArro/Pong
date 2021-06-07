@@ -11,5 +11,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         
         backgroundColor = .black
     }
+    
+    func makeBall() {
+        //
+    }
+    
+    func makeBricks() {
+        //
+    }
 }
 
