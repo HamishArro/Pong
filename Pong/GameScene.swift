@@ -10,6 +10,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         scene?.scaleMode = .fill
         
         backgroundColor = .black
+        
+        let border = SKPhysicsBody(edgeLoopFrom: frame)
+        border.friction = 0
+        physicsBody = border
     }
     
     func makeBall() {
