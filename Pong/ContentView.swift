@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  Pong
-//
-//  Created by Hamish Arro on 07/06/2021.
-//
-
 import SwiftUI
 
 struct ContentView: View {
