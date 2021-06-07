@@ -98,7 +98,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     func makeFloor() {
         floor.name = "floor"
         floor.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: 0)
-        floor.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 24, height: 24))
+        floor.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: UIScreen.main.bounds.width, height: 20))
         floor.physicsBody!.allowsRotation = false
         floor.physicsBody!.isDynamic = false
         floor.physicsBody!.contactTestBitMask = floor.physicsBody!.collisionBitMask
