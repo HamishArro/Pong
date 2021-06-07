@@ -5,6 +5,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     @Published var isGameOver = false
     @Published var level = 1
     
+    let ball = SKShapeNode(circleOfRadius: CGFloat(12))
+    let paddle = SKSpriteNode(color: SKColor(.white), size: CGSize(width: 120, height: 16))
+    let floor = SKSpriteNode(color: SKColor(.clear), size: CGSize(width: UIScreen.main.bounds.width, height: 20))
+    
     override func didMove(to view: SKView) {
         self.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         scene?.scaleMode = .fill
