@@ -51,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     func makePaddle() {
         paddle.name = "paddle"
         paddle.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: 40)
-        paddle.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 24, height: 24))
+        paddle.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 120, height: 16))
         paddle.physicsBody!.allowsRotation = false
         paddle.physicsBody!.friction = 0
         paddle.physicsBody!.restitution = 1
@@ -103,6 +103,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         floor.physicsBody!.isDynamic = false
         floor.physicsBody!.contactTestBitMask = floor.physicsBody!.collisionBitMask
         addChild(floor)
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node?.name == "ball" && contact.bodyB.node?.name == "brick" {
+            removeFromParent(contact.bodyB.node!)
+            updateScore(1)
+            
+            if children.count <= 3 {
+                ball.removeFromParent()
+                level += 1
+                
+                makeBall()
+                makeBricks()
+            }
+        }
+        if contact.bodyA.node?.name == "ball" && contact.bodyB.node?.name == "floor" {
+            ball.removeFromParent()
+            isGameOver.toggle()
+        }
+    }
+    
+    func removeFromParent(_ node: SKNode) {
+        node.removeFromParent()
+    }
+    
+    func updateScore(_ newScore: Int) {
+        score += newScore
     }
 }
 
