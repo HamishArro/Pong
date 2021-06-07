@@ -6,8 +6,15 @@ struct ContentView: View {
     @StateObject private var gameScene = GameScene()
     
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ZStack {
+            SpriteView(scene: gameScene)
+            VStack(alignment: .leading) {
+                Text("Level: 1")
+                    .font(.system(size: 12, weight: .heavy, design: .rounded))
+                    .foregroundColor(.white)
+            }
+        }
+        .ignoresSafeArea()
     }
 }
 
