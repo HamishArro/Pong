@@ -45,7 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         ball.physicsBody!.linearDamping = 0
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         addChild(ball)
-        ball.physicsBody!.applyImpulse(CGVector(dx: 6 + level * 2, dy: -6 - level * 2))
+        ball.physicsBody!.applyImpulse(CGVector(dx: 6 + level, dy: -6 - level))
     }
     
     func makePaddle() {
