@@ -45,7 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         ball.physicsBody!.linearDamping = 0
         ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
         addChild(ball)
-        ball.physicsBody!.applyImpulse(CGVector(dx: 8, dy: -8))
+        ball.physicsBody!.applyImpulse(CGVector(dx: 6 + level * 2, dy: -6 - level * 2))
     }
     
     func makePaddle() {
@@ -61,38 +61,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     }
     
     func makeBricks() {
-        let rows = [
-            Row(colour: .red, positionY: UIScreen.main.bounds.height / 1.14),
-            Row(colour: .red, positionY: UIScreen.main.bounds.height / 1.17),
-            Row(colour: .orange, positionY: UIScreen.main.bounds.height / 1.202),
-            Row(colour: .orange, positionY: UIScreen.main.bounds.height / 1.235),
-            Row(colour: .green, positionY: UIScreen.main.bounds.height / 1.272),
-            Row(colour: .green, positionY: UIScreen.main.bounds.height / 1.310),
-            Row(colour: .yellow, positionY: UIScreen.main.bounds.height / 1.350),
-            Row(colour: .yellow, positionY: UIScreen.main.bounds.height / 1.392),
-        ]
-        rows.forEach {
-            makeRows(colour: $0.colour, positionY: $0.positionY)
+//        let rows = [
+//            Row(colour: .red, positionY: UIScreen.main.bounds.height / 1.14),
+//            Row(colour: .red, positionY: UIScreen.main.bounds.height / 1.17),
+//            Row(colour: .orange, positionY: UIScreen.main.bounds.height / 1.202),
+//            Row(colour: .orange, positionY: UIScreen.main.bounds.height / 1.235),
+//            Row(colour: .green, positionY: UIScreen.main.bounds.height / 1.272),
+//            Row(colour: .green, positionY: UIScreen.main.bounds.height / 1.310),
+//            Row(colour: .yellow, positionY: UIScreen.main.bounds.height / 1.350),
+//            Row(colour: .yellow, positionY: UIScreen.main.bounds.height / 1.392),
+//        ]
+//        rows.forEach {
+//            makeRows(colour: $0.colour, positionY: $0.positionY)
+//        }
+        for row in 1...8 {
+            var density = level / 8
+            if row <= level % 8 { density += 1 }
+            makeRow(row, density)
         }
     }
     
-    func makeRows(colour: UIColor, positionY: CGFloat) {
-        let numberOfBricks = 8
+    func makeRow(_ row: Int, _ density: Int) {
+//        let numberOfBricks = 8
+        if density == 0 { return }
         let brickWidth: CGFloat = 50
         let brickHeight: CGFloat = 16
-        let totalBrickWidth = brickWidth * CGFloat(numberOfBricks)
+        var coloumns = [1,2,3,4,5,6,7,8]
+        coloumns.shuffle()
+        let totalBrickWidth = brickWidth * CGFloat(coloumns.count)
         let xOffset = (frame.width - totalBrickWidth) / 2
-        
-        for index in 0..<numberOfBricks {
-            let brick = SKSpriteNode(color: colour, size: CGSize(width: 35, height: brickHeight))
+//
+        for _ in 0...4 {
+            let index = coloumns.popLast()
+            let brick = SKSpriteNode(color: .gray, size: CGSize(width: 35, height: brickHeight))
             brick.name = "brick"
-            brick.position = CGPoint(x: xOffset + CGFloat(CGFloat(index) + 0.5) * brickWidth, y: positionY)
+            brick.position = CGPoint(x: xOffset + CGFloat(CGFloat(index!) - 0.5) * brickWidth, y: UIScreen.main.bounds.height - CGFloat(row * 20 + 80))
             brick.physicsBody = SKPhysicsBody(rectangleOf: brick.frame.size)
             brick.physicsBody!.allowsRotation = false
             brick.physicsBody!.friction = 0
             brick.physicsBody!.isDynamic = false
             addChild(brick)
         }
+        
     }
     
     func makeFloor() {
